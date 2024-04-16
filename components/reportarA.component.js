@@ -7,10 +7,10 @@ import {
   List,
   ListItem,
   Text,
-  TopNavigation,
   TopNavigationAction,
 } from "@ui-kitten/components";
-import axios from "axios";
+import { supabase } from "../supabase";
+import * as SecureStore from "expo-secure-store";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
@@ -18,12 +18,11 @@ export const ReportarA = ({ navigation }) => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get("http://192.168.18.7:3000/problemas");
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    let { data: problemas, error } = await supabase
+      .from("problemas")
+      .select("*");
+
+    setData(problemas);
   };
 
   useEffect(() => {
@@ -34,12 +33,21 @@ export const ReportarA = ({ navigation }) => {
     navigation.goBack();
   };
 
+  async function problemaSelecionado(problema) {
+    await SecureStore.setItemAsync("id_problema", problema.toString());
+    navigation.navigate("ReportarB");
+  }
+
   const BackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
   );
 
   const renderItem = ({ item }) => (
-    <ListItem title={item.title} description={item.description} />
+    <ListItem
+      onPress={() => problemaSelecionado(item.id)}
+      title={item.problema}
+      description={item.descricao}
+    />
   );
 
   return (
@@ -55,7 +63,7 @@ export const ReportarA = ({ navigation }) => {
             Qual o Tipo de Problema que você encontrou e gostaria de reportar?
           </Text>
         </View>
-        <View style={{ width: "100%", paddingBottom: 165 }}>
+        <View style={{ width: "100%", paddingBottom: 230 }}>
           <List
             style={styles.container}
             data={data}
