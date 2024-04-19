@@ -1,23 +1,13 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
-import {
-  Button,
-  Card,
-  Divider,
-  Layout,
-  Text,
-  TopNavigation,
-} from "@ui-kitten/components";
+import { ImageBackground, SafeAreaView, StyleSheet, View } from "react-native";
+import { Card, Layout, Text } from "@ui-kitten/components";
 
 export const HomeScreen = ({ navigation }) => {
   const navigateDetails = () => {
     navigation.navigate("ReportarA");
+  };
+  const navigateNoticias = () => {
+    navigation.navigate("Noticias");
   };
 
   const imgNoticia = require("../Content/jornal.png");
@@ -32,8 +22,6 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <TopNavigation title="MyApp" alignment="center" />
-      <Divider /> */}
       <Layout style={{ flex: 1, alignItems: "center" }}>
         <View style={styles.viewHeader}>
           <Text style={styles.text} category="h2">
@@ -51,7 +39,7 @@ export const HomeScreen = ({ navigation }) => {
               </View>
             </ImageBackground>
           </Card>
-          <Card style={styles.card} status="info">
+          <Card style={styles.card} status="info" onPress={navigateNoticias}>
             <ImageBackground source={imgNoticia} resizeMode="cover">
               <View style={{ padding: 15 }}>
                 <Text category="h5">Noticias</Text>

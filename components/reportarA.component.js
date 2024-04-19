@@ -52,11 +52,6 @@ export const ReportarA = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* <TopNavigation
-        alignment="center"
-        accessoryLeft={BackAction}
-        style={{ paddingTop: 40, backgroundColor: "rgba(0, 149, 255, 0.48)" }}
-      /> */}
       <Layout style={{ flex: 1, alignItems: "center" }}>
         <View style={styles.viewHeader}>
           <Text style={styles.text} category="h2">
